@@ -35,7 +35,8 @@ def send_emails(subject: str, bodies: List[str], to_emails: List[str], username:
         # Check if the maximum number of emails per day has been reached
         if emails_sent >= max_emails_per_day:
             print(
-                f"Reached the maximum number of emails ({max_emails_per_day}) that can be sent in a day for a free Gmail account. Waiting until tomorrow to send more emails.")
+                f"Reached the maximum number of emails ({max_emails_per_day}) that can be sent in a day for a free "
+                f"Gmail account. Waiting until tomorrow to send more emails.")
             time.sleep(86400)  # Wait for 24 hours (86400 seconds)
             emails_sent = 0
 
