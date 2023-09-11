@@ -43,5 +43,10 @@ class Command(BaseCommand):
     help = "Send mails to all users who didn't receive mails yet"
 
     def handle(self, *args, **options):
-        while Person.objects.filter(has_received_email=False).exists():
-            send_ticket_email(Person.objects.filter(has_received_email=False)[:20])
+        try:
+            while Person.objects.filter(has_received_email=False).exists():
+                send_ticket_email(Person.objects.filter(has_received_email=False)[:20])
+        except AttributeError:
+            pass
+        finally:
+            print("Done")
