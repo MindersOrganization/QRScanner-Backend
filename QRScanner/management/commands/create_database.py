@@ -1,5 +1,6 @@
 import csv
 from QRScanner.models import Person
+from django.core.management.base import BaseCommand
 
 
 def csv_to_db(file: str) -> None:
@@ -12,3 +13,12 @@ def csv_to_db(file: str) -> None:
                 full_name=row['full_name']
             )
             obj.save()
+
+
+class Command(BaseCommand):
+    help = "Send mails to all users who didn't receive mails yet"
+
+    def handle(self, *args, **options):
+        print("Importing CSV ...")
+        csv_to_db(".\\Scripts\\data.csv")
+        print("Finished Successfully")

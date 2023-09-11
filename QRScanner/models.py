@@ -17,8 +17,8 @@ class Person(models.Model):
         return self.full_name
 
     def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.id is not None:
+        super().save(*args, **kwargs)  # Save the Person object first to get an id
+        if self.id is not None and not self.qr_code:
             qrcode_img = qrcode.make(self.id)
             canvas = Image.new('RGB', (290, 290), 'white')
             draw = ImageDraw.Draw(canvas)
@@ -28,3 +28,4 @@ class Person(models.Model):
             canvas.save(buffer, 'PNG')
             self.qr_code.save(fname, File(buffer), save=False)
             canvas.close()
+            super().save(*args, **kwargs)  # Save again to save the qr_code
