@@ -39,6 +39,7 @@ def send_ticket_email(persons):
             counter += 1
 
             if (counter - 1) % 20 == 0:
+                print("Mails are sent, sleeping for an hour")
                 time.sleep(3600)
 
 
@@ -48,7 +49,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         try:
             while Attendee.objects.filter(has_received_email=False).exists():
-                send_ticket_email(Attendee.objects.filter(has_received_email=False)[:20])
+                send_ticket_email(Attendee.objects.filter(has_received_email=False))
         except AttributeError:
             pass
         finally:
