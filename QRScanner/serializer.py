@@ -3,7 +3,7 @@ from rest_framework.serializers import ModelSerializer
 from QRScanner.models import Attendee
 
 
-class QRScannerTestSerializer(ModelSerializer):
+class AttendeeTicketSerializer(ModelSerializer):
     class Meta:
         model = Attendee
-        fields = '__all__'
+        fields = ['full_name', 'email', 'mobile_number', 'id']
