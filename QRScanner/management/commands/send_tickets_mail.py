@@ -5,7 +5,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.core.mail import get_connection
 
-from QRScanner.models import Person
+from QRScanner.models import Attendee
 
 from django.core.management.base import BaseCommand
 
@@ -14,6 +14,8 @@ def send_ticket_email(persons):
     subject = "Minders'23 First Step - Style Your Future"
     from_email = 'mail@gmail.com'
     with get_connection() as connection:
+        counter = 1
+        size = len(persons)
         for person in persons:
             to = person.email
             html_content = render_to_string('ticket.html', {'full_name': person.full_name})
@@ -33,19 +35,20 @@ def send_ticket_email(persons):
             msg.send()
             person.has_received_email = True
             person.save()
-            print("Sent mail to {}.".format(person.full_name))
+            print("({}/{}) -> Sent mail to {}.".format(counter, size, person.full_name))
+            counter += 1
 
-        if persons.index(person) % 20 == 0:
-            time.sleep(3600)
+            if (counter - 1) % 20 == 0:
+                time.sleep(3600)
 
 
 class Command(BaseCommand):
-    help = "Send mails to all users who didn't receive mails yet"
+    help = "Send mails to all users who didn't receive ticket mails yet"
 
     def handle(self, *args, **options):
         try:
-            while Person.objects.filter(has_received_email=False).exists():
-                send_ticket_email(Person.objects.filter(has_received_email=False)[:20])
+            while Attendee.objects.filter(has_received_email=False).exists():
+                send_ticket_email(Attendee.objects.filter(has_received_email=False)[:20])
         except AttributeError:
             pass
         finally:

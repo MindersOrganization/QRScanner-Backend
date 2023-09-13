@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from QRScanner.models import Person
+from QRScanner.models import Attendee
 from QRScanner.serializer import QRScannerTestSerializer
 
 
@@ -9,6 +9,6 @@ from QRScanner.serializer import QRScannerTestSerializer
 class QRScannerTestViewSet(
     viewsets.ModelViewSet,
 ):
-    queryset = Person.objects.all()
+    queryset = Attendee.objects.all()
     serializer_class = QRScannerTestSerializer
     lookup_field = 'id'
