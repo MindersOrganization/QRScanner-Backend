@@ -7,4 +7,5 @@ router.register('', views.AttendeeListView)
 
 urlpatterns = [
     path('dashboard/', include(router.urls)),
+    path('<uuid:uuid>/', views.Scan.as_view(), name='scan'),
 ]

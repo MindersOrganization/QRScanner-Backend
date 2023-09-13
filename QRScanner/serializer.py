@@ -14,3 +14,9 @@ class AttendeeSerializer(serializers.ModelSerializer):
         if obj.qr_code:
             return settings.MEDIA_URL + str(obj.qr_code)
         return None
+
+
+class AttendeeTicketSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendee
+        fields = ['full_name', 'email', 'mobile_number', 'id']
