@@ -82,10 +82,20 @@ WSGI_APPLICATION = 'QRWebService.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'minders_qr',  # Replace with your database name
+        'USER': 'minders_qr_admin',  # Replace with your database username
+        'PASSWORD': 'Minders@2023',  # Replace with your database password
+        'HOST': 'qr_db',  # This is the name of the MySQL service defined in docker-compose.yml
+        'PORT': '3307',  # MySQL default port
     }
+
 }
 
 # Password validation
