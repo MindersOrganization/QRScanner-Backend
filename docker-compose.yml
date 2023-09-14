@@ -1,0 +1,32 @@
+version: '3'
+services:
+  qr_db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: Minders@2023
+      MYSQL_DATABASE: minders_qr
+      MYSQL_USER: minders_qr_admin
+      MYSQL_PASSWORD: Minders@2023
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - my_network
+
+  qr_backend:
+    build: .
+    ports:
+      - "9090:80"
+    command: /wait-for-db.sh "python manage.py makemigrations && python manage.py migrate && python manage.py read_attendee_csv && gunicorn minders.wsgi:application --bind 0.0.0.0:80"
+    depends_on:
+      - db
+    networks:
+      - my_network
+
+volumes:
+  db_data:
+
+networks:
+  my_network:
+#exec gunicorn minders.wsgi:application --bind 0.0.0.0:80 --workers 3

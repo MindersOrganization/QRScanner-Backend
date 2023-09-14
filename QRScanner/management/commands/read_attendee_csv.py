@@ -4,7 +4,7 @@ from django.core.management.base import BaseCommand
 
 
 def csv_to_db(file: str) -> None:
-    with open(file, mode='r') as csv_file:
+    with open(file, mode='r', encoding='utf-8-sig') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for row in csv_reader:
             obj = Attendee(

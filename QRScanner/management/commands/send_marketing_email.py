@@ -1,5 +1,4 @@
 import time
-from email.mime.image import MIMEImage
 
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -11,8 +10,8 @@ from django.core.management.base import BaseCommand
 
 
 def send_marketing_email(persons):
-    subject = "Test Marketing Mail" #TODO: Set Subject
-    from_email = 'mail@gmail.com'
+    subject = """Join us at "First Step" Event - Style your future"""
+    from_email = 'minders.fcih@gmail.com'
     with get_connection() as connection:
         counter = 1
         size = len(persons)
@@ -26,6 +25,7 @@ def send_marketing_email(persons):
             counter += 1
 
             if (counter - 1) % 20 == 0:
+                print("Mails are sent, sleeping for an hour")
                 time.sleep(3600)
 
 
