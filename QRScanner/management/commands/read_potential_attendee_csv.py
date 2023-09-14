@@ -20,5 +20,5 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         print("Importing CSV ...")
-        csv_to_db("potential_attendee.csv")
+        csv_to_db("./data/potential_attendee.csv")
         print("Finished Successfully")
