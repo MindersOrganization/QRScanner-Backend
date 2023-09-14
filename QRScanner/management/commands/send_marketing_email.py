@@ -11,7 +11,7 @@ from django.core.management.base import BaseCommand
 
 def send_marketing_email(persons):
     subject = """Join us at "First Step" Event - Style your future"""
-    from_email = 'mail@gmail.com'
+    from_email = 'minders.fcih@gmail.com'
     with get_connection() as connection:
         counter = 1
         size = len(persons)
