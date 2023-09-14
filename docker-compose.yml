@@ -20,7 +20,7 @@ services:
       - "9090:80"
     command: /wait-for-db.sh "python manage.py makemigrations && python manage.py migrate && python manage.py read_attendee_csv && gunicorn minders.wsgi:application --bind 0.0.0.0:80"
     depends_on:
-      - db
+      - qr_db
     networks:
       - my_network
 
