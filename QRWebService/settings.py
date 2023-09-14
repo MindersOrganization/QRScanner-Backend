@@ -93,7 +93,7 @@ DATABASES = {
         'USER': 'minders_qr_admin',  # Replace with your database username
         'PASSWORD': 'Minders@2023',  # Replace with your database password
         'HOST': 'qr_db',  # This is the name of the MySQL service defined in docker-compose.yml
-        'PORT': '3307',  # MySQL default port
+        'PORT': '3306',  # MySQL default port
     }
 
 }
