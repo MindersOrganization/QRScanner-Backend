@@ -80,25 +80,39 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'QRWebService.wsgi.application'
 
+MEDIA_URL = '/media/'
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.2/howto/static-files/
+
+STATIC_URL = 'static/'
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
-
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'minders_qr',  # Replace with your database name
-        'USER': 'minders_qr_admin',  # Replace with your database username
-        'PASSWORD': 'Minders@2023',  # Replace with your database password
-        'HOST': 'qr_db',  # This is the name of the MySQL service defined in docker-compose.yml
-        'PORT': '3306',  # MySQL default port
+if os.environ.get('ENVIRONMENT', 'prod') == 'debug':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'minders_qr',  # Replace with your database name
+            'USER': 'minders_qr_admin',  # Replace with your database username
+            'PASSWORD': 'Minders@2023',  # Replace with your database password
+            'HOST': 'qr_db',  # This is the name of the MySQL service defined in docker-compose.yml
+            'PORT': '3306',  # MySQL default port
+        }
+    }
+    FORCE_SCRIPT_NAME = '/qr/api'
+    STATIC_URL = '/qr/api/static/'
+    MEDIA_URL = '/qr/api/media/'
 
-}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -129,11 +143,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -146,5 +155,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-
-MEDIA_URL = '/media/'
