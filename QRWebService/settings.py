@@ -81,13 +81,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'QRWebService.wsgi.application'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = STATIC_URL
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -111,8 +109,6 @@ else:
         }
     }
     FORCE_SCRIPT_NAME = '/qr/api'
-    STATIC_URL = '/qr/api/static/'
-    MEDIA_URL = '/qr/api/media/'
 
 
 
