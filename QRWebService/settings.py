@@ -106,11 +106,12 @@ else:
             'PASSWORD': 'Minders@2023',  # Replace with your database password
             'HOST': 'qr_db',  # This is the name of the MySQL service defined in docker-compose.yml
             'PORT': '3306',  # MySQL default port
+            'OPTIONS': {
+                'charset': 'utf8mb4'
+            },
         }
     }
     FORCE_SCRIPT_NAME = '/qr/api'
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
