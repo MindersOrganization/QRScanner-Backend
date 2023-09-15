@@ -81,7 +81,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'QRWebService.wsgi.application'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = MEDIA_URL
+MEDIA_ROOT = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
