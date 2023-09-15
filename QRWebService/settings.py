@@ -109,8 +109,6 @@ else:
         }
     }
     FORCE_SCRIPT_NAME = '/qr/api'
-    STATIC_URL = '/qr/api/static/'
-    MEDIA_URL = '/qr/api/media/'
 
 
 
