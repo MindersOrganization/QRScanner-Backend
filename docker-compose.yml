@@ -18,11 +18,11 @@ services:
     build: .
     ports:
       - "9090:80"
-    command: /wait-for-db.sh "python manage.py makemigrations && python manage.py migrate && python manage.py read_attendee_csv && gunicorn QRWebService.wsgi:application --bind 0.0.0.0:80"
+    command: /wait-for-db.sh "python manage.py makemigrations && python manage.py migrate && gunicorn QRWebService.wsgi:application --bind 0.0.0.0:80"
     depends_on:
       - qr_db
     volumes:
-      - qr_codes:/home/qrscanner/qr_codes
+      - qr_codes:/my_app_dir/qr_codes
     networks:
       - my_network
 
