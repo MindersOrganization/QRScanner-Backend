@@ -88,12 +88,14 @@ def time_block():
         time.sleep((tomorrow_at_8 - datetime.now()).seconds)
 
 
-def sleep_until_next_hour():
+def sleep_until_next_hour(curr_hour):
     current_time = datetime.now()
-    next_hour = (current_time + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
-    sleep_time = (next_hour - current_time).total_seconds()
-    print(f"Sleeping for {sleep_time} seconds until {next_hour}.")
-    time.sleep(sleep_time)
+    if curr_hour == current_time.hour:
+        next_hour = (current_time + timedelta(hours=1)).replace(minute=0, second=1, microsecond=0)
+        sleep_time = (next_hour - current_time).total_seconds()
+        time.sleep(sleep_time)
+    return current_time.hour
+
 
 def send_ticket_email(persons):
     subject = "Minders'23 First Step - Style Your Future"
@@ -101,6 +103,7 @@ def send_ticket_email(persons):
     with get_connection() as connection:
         counter = 1
         size = len(persons)
+        curr_hour = datetime.now().hour
         for person in persons:
             to = person.email
             html_content = render_to_string('ticket.html', {'full_name': person.full_name})
@@ -120,7 +123,7 @@ def send_ticket_email(persons):
 
             if (counter - 1) % 33 == 0:
                 print("Sent 20 mails, sleeping for an hour")
-                sleep_until_next_hour()
+                curr_hour = sleep_until_next_hour(curr_hour)
 
 
 class Command(BaseCommand):
