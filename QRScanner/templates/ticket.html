@@ -3,10 +3,37 @@
     <head>
         <meta charset="UTF-8">
         <title>Minders - Ticket</title>
+        <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/metropolis" type="text/css"/>
     </head>
     <body>
         <h1>Hello {{ full_name }}!</h1>
         <p>Here is your ticket:</p>
-        <img src="cid:qr_code" alt="qr-code">
+
+        <div style="width: 100%">
+            <img src="cid:main_ticket" alt="" width="100%" />
+        </div>
+
+        <div style="width: 100%">
+            <div style="height: 15%">
+                <img src="cid:minders_logo" alt="" style="float: left" width="15%" />
+                <img src="cid:first_step_logo" alt="" style="float: right" width="15%" />
+            </div>
+        </div>
+        <div style="width: 100%">
+            <div style="
+              font-family: 'MetropolisRegular',serif;
+              margin: 0 auto;
+              width: 70%;
+              padding-top: 15%;
+            ">
+                <div style="margin: 0 auto; width: 80%">
+                    <img src="cid:admit_one" alt="" style="width: 100%" />
+                </div>
+                <img src="cid:qr_code" alt="" style="width: 100%" />
+                <div style="margin: 0 auto; width: 90%">
+                    <img src="cid:scan_me" alt="" style="width: 100%" />
+                </div>
+            </div>
+        </div>
     </body>
 </html>
