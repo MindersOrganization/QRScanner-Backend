@@ -22,63 +22,6 @@ def attach_qr_code(msg, person):
     return msg
 
 
-# Global variable to store images
-cached_images = {}
-
-
-def cache_images():
-    static_images = [
-        {
-            'path': 'media/ADMIT-ONE.png',
-            'extension': 'png',
-            'cid': 'admit_one'
-        },
-        {
-            'path': 'media/First-Step-Logo_.png',
-            'extension': 'png',
-            'cid': 'first_step_logo'
-        },
-        {
-            'path': 'media/Main-Ticket.png',
-            'extension': 'png',
-            'cid': 'main_ticket'
-        },
-        {
-            'path': 'media/Minders-Logo.png',
-            'extension': 'png',
-            'cid': 'minders_logo'
-        },
-        {
-            'path': 'media/Scan-Me.png',
-            'extension': 'png',
-            'cid': 'scan_me'
-        }
-    ]
-    for image in static_images:
-        with open(image['path'], 'rb') as img:
-            # Cache the image data
-            cached_images[image['cid']] = img.read()
-
-    print("Static have been cached")
-
-
-def attach_static_media(msg):
-    for image in cached_images:
-        # Create a MIMEImage from the cached data
-        msg_img = MIMEImage(cached_images[image], _subtype='png')
-        # Define the Content-ID header
-        msg_img.add_header('Content-ID', image)
-        # Attach the image
-        msg.attach(msg_img)
-    return msg
-
-
-def attach_media(msg, person):
-    msg = attach_qr_code(msg, person)
-    msg = attach_static_media(msg)
-    return msg
-
-
 def time_block():
     current_time = datetime.now()
     if current_time.hour < 8 or current_time.hour >= 23:
@@ -106,12 +49,15 @@ def send_ticket_email(persons):
         curr_hour = datetime.now().hour
         for person in persons:
             to = person.email
-            html_content = render_to_string('ticket.html', {'full_name': person.full_name})
+            html_content = render_to_string(
+                'ticket.html',
+                {
+                    'qr_code': "mindersclub.org/qr/api/" + person.qr_code.url
+                }
+            )
 
             msg = EmailMultiAlternatives(subject, '', from_email, [to])
             msg.attach_alternative(html_content, "text/html")
-
-            msg = attach_media(msg, person)
 
             time_block()
 
@@ -130,7 +76,6 @@ class Command(BaseCommand):
     help = "Send mails to all users who didn't receive ticket mails yet"
 
     def handle(self, *args, **options):
-        cache_images()
         try:
             while Attendee.objects.filter(has_received_email=False).exists():
                 send_ticket_email(list(Attendee.objects.filter(has_received_email=False)))
