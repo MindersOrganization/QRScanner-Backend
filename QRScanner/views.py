@@ -2,7 +2,7 @@ from QRScanner.models import Attendee
 from rest_framework import mixins, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from QRScanner.serializer import AttendeeTicketSerializer
+from QRScanner.serializer import AttendeeTicketSerializer, AttendeeUpdateSerializer
 from QRScanner.serializer import AttendeeSerializer
 from django_filters import rest_framework as filters
 
@@ -18,6 +18,7 @@ class AttendeeFilter(filters.FilterSet):
 class AttendeeListView(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
     viewsets.GenericViewSet
 ):
     queryset = Attendee.objects.order_by('full_name').all()
@@ -25,6 +26,17 @@ class AttendeeListView(
     lookup_field = 'id'
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = AttendeeFilter
+
+    def update(self, request, *args, **kwargs):
+        temp_serializer_class = self.serializer_class
+        temp_filter_backend = self.filter_backends
+        temp_filterset_class = self.filterset_class
+        self.serializer_class = AttendeeUpdateSerializer
+        ret = super().update(request, *args, **kwargs)
+        self.serializer_class = temp_serializer_class
+        self.filter_backends = temp_filter_backend
+        self.filterset_class = self.filterset_class
+        return ret
 
 
 class Scan(APIView):

@@ -20,3 +20,9 @@ class AttendeeTicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendee
         fields = ['full_name', 'email', 'mobile_number', 'id']
+
+
+class AttendeeUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attendee
+        fields = ['has_attended']
