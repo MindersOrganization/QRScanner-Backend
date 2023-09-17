@@ -98,7 +98,7 @@ def sleep_until_next_hour(curr_hour):
 
 
 def send_ticket_email(persons):
-    subject = "Minders'23 First Step - Style Your Future"
+    subject = "Welcome to First Step!"
     from_email = 'mail@gmail.com'
     with get_connection() as connection:
         counter = 1
