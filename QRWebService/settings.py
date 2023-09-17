@@ -104,8 +104,8 @@ else:
             'NAME': 'minders_qr',  # Replace with your database name
             'USER': 'minders_qr_admin',  # Replace with your database username
             'PASSWORD': 'Minders@2023',  # Replace with your database password
-            'HOST': 'qr_db',  # This is the name of the MySQL service defined in docker-compose.yml
-            'PORT': '3306',  # MySQL default port
+            'HOST': 'mindersclub.org',  # This is the name of the MySQL service defined in docker-compose.yml
+            'PORT': '3307',  # MySQL default port
             'OPTIONS': {
                 'charset': 'utf8mb4'
             },
