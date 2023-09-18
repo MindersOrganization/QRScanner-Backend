@@ -1,3 +1,4 @@
+import smtplib
 from email.mime.image import MIMEImage
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -54,15 +55,15 @@ def send_ticket_email(persons):
 
             time_block()
 
-            try :
+            try:
                 msg.send()
                 print("{}/{} Sent mail to {} at {}".format(counter, size, person.full_name, person.email))
-            except Exception:
+            except smtplib.SMTPRecipientsRefused:
                 print("Failed mail to {} at {}, Skipping.".format(counter, size, person.full_name, person.email))
-            finally:
-                counter += 1
-                person.has_received_email = True
-                person.save()
+
+            counter += 1
+            person.has_received_email = True
+            person.save()
 
 
 class Command(BaseCommand):
