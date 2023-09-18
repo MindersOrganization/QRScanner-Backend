@@ -36,34 +36,31 @@ def time_block():
 
 def send_ticket_email(persons):
     subject = "Welcome to First Step!"
-    from_email = 'mail@gmail.com'
+    from_email = 'minders.fcih@gmail.com'
     with get_connection() as connection:
-        counter = 1
-        size = len(persons)
-        curr_hour = datetime.now().hour
-        for person in persons:
-            to = person.email
-            html_content = render_to_string(
-                'ticket.html',
-                {
-                    'qr_code': "mindersclub.org/qr/api/" + person.qr_code.url
-                }
-            )
+        person = persons[0]
+        to = person.email
+        html_content = render_to_string(
+            'ticket.html',
+            {
+                'qr_code': "mindersclub.org/qr/api/" + person.qr_code.url
+            }
+        )
 
-            msg = EmailMultiAlternatives(subject, '', from_email, [to])
-            msg.attach_alternative(html_content, "text/html")
+        msg = EmailMultiAlternatives(subject, '', from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
 
-            time_block()
+        time_block()
 
-            try:
-                msg.send()
-                print("{}/{} Sent mail to {} at {}".format(counter, size, person.full_name, person.email))
-            except smtplib.SMTPRecipientsRefused:
-                print("Failed mail to {} at {}, Skipping.".format(counter, size, person.full_name, person.email))
+        try:
+            msg.send()
+            print("Sent mail to {} at {}".format( person.full_name, person.email))
+        except smtplib.SMTPRecipientsRefused:
+            print("Failed mail to {} at {}, Skipping.".format(person.full_name, person.email))
 
-            counter += 1
-            person.has_received_email = True
-            person.save()
+        person.has_received_email = True
+        person.save()
+
 
 
 class Command(BaseCommand):
