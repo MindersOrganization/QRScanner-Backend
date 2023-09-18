@@ -56,14 +56,13 @@ def send_ticket_email(persons):
 
             try :
                 msg.send()
-                person.has_received_email = True
-                person.save()
                 print("{}/{} Sent mail to {} at {}".format(counter, size, person.full_name, person.email))
-                counter += 1
-
             except Exception:
                 print("Failed mail to {} at {}, Skipping.".format(counter, size, person.full_name, person.email))
+            finally:
                 counter += 1
+                person.has_received_email = True
+                person.save()
 
 
 class Command(BaseCommand):
