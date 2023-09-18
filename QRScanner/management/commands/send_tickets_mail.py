@@ -8,6 +8,7 @@ from django.core.management.base import BaseCommand
 
 import time
 from datetime import datetime, timedelta
+import pytz
 
 
 def attach_qr_code(msg, person):
@@ -23,12 +24,13 @@ def attach_qr_code(msg, person):
 
 
 def time_block():
-    current_time = datetime.now()
+    cairo_tz = pytz.timezone('Africa/Cairo')
+    current_time = datetime.now(cairo_tz)
     if current_time.hour < 8 or current_time.hour >= 23:
         print("Sleeping until 8 AM.")
-        tomorrow = datetime.now() + timedelta(1)
-        tomorrow_at_8 = datetime(year=tomorrow.year, month=tomorrow.month, day=tomorrow.day, hour=8)
-        time.sleep((tomorrow_at_8 - datetime.now()).seconds)
+        tomorrow = datetime.now(cairo_tz) + timedelta(1)
+        tomorrow_at_8 = datetime(year=tomorrow.year, month=tomorrow.month, day=tomorrow.day, hour=8, tzinfo=cairo_tz)
+        time.sleep((tomorrow_at_8 - datetime.now(cairo_tz)).seconds)
 
 
 def send_ticket_email(persons):
