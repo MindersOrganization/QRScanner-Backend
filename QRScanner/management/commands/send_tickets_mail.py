@@ -68,7 +68,7 @@ class Command(BaseCommand):
         while Attendee.objects.filter(has_received_email=False).exists():
             try:
                 send_ticket_email(list(Attendee.objects.filter(has_received_email=False)))
-            except AttributeError:
+            except Exception:
                 pass
             finally:
                 time.sleep(1)
