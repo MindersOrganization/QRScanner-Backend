@@ -31,15 +31,6 @@ def time_block():
         time.sleep((tomorrow_at_8 - datetime.now()).seconds)
 
 
-def sleep_until_next_hour(curr_hour):
-    current_time = datetime.now()
-    if curr_hour == current_time.hour:
-        next_hour = (current_time + timedelta(hours=1)).replace(minute=0, second=1, microsecond=0)
-        sleep_time = (next_hour - current_time).total_seconds()
-        time.sleep(sleep_time)
-    return current_time.hour
-
-
 def send_ticket_email(persons):
     subject = "Welcome to First Step!"
     from_email = 'mail@gmail.com'
@@ -66,10 +57,6 @@ def send_ticket_email(persons):
             person.save()
             print("{}/{} Sent mail to {} at {}".format(counter, size, person.full_name, person.email))
             counter += 1
-
-            if (counter - 1) % 33 == 0:
-                print("Sent 20 mails, sleeping for an hour")
-                curr_hour = sleep_until_next_hour(curr_hour)
 
 
 class Command(BaseCommand):
