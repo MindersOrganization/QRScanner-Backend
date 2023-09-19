@@ -54,13 +54,12 @@ def send_ticket_email(persons):
 
         try:
             msg.send()
-            print("Sent mail to {} at {}".format( person.full_name, person.email))
+            print("Sent mail to {} at {}".format(person.full_name, person.email))
         except smtplib.SMTPRecipientsRefused:
             print("Failed mail to {} at {}, Skipping.".format(person.full_name, person.email))
 
         person.has_received_email = True
         person.save()
-
 
 
 class Command(BaseCommand):
@@ -72,6 +71,9 @@ class Command(BaseCommand):
                 send_ticket_email(list(Attendee.objects.filter(has_received_email=False)))
             except AttributeError:
                 pass
+            except smtplib.SMTPServerDisconnected:
+                print("Disconnected, Sleeping for 30 seconds this attempting again")
+                time.sleep(30)
             finally:
-                time.sleep(1)
+                time.sleep(2)
         print("Done")
