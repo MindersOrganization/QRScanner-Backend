@@ -50,7 +50,7 @@ def send_ticket_email(persons):
         msg = EmailMultiAlternatives(subject, '', from_email, [to])
         msg.attach_alternative(html_content, "text/html")
 
-        time_block()
+        # time_block()
 
         try:
             msg.send()
