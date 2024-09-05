@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'QRScanner',
-    'rest_framework'
+    'rest_framework',
+    'FirstStep',
 ]
 
 REST_FRAMEWORK = {
